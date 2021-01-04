@@ -1,5 +1,7 @@
 import React from "react";
 import FormInput from "../form-input/form-input.component";
+import CustomButton from "../custom-button/custom-button.component";
+import { signInWithGoogle } from "../../firebase/firebase.utils";
 import "./sign-in.styles.scss";
 
 class SignIn extends React.Component {
@@ -16,10 +18,11 @@ class SignIn extends React.Component {
     event.preventDefault();
     this.setState({ email: "", password: "" });
   };
-
+  //name= email or password, value= input value
   handleChange = (event) => {
     const { value, name } = event.target;
-    this.setState({ [name]: value });
+    this.setState({ [name]: value }); //make it dynamic
+    console.log(name, ":", `'`, value, `'`);
   };
 
   render() {
@@ -47,7 +50,15 @@ class SignIn extends React.Component {
             required
           />
 
-          <input type="submit" value="Submit Form" />
+          <div className="buttons">
+            <CustomButton type="submit">Sign IN</CustomButton>
+            {
+              //when a prop is passed with no value, its default to true
+            }
+            <CustomButton onClick={signInWithGoogle} isGoogleSignIn>
+              Sign In With Google
+            </CustomButton>
+          </div>
         </form>
       </div>
     );
