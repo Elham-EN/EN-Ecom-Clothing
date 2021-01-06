@@ -23,6 +23,36 @@ const config = {
   measurementId: "G-7THZ2V8R8Z",
 };
 
+//take userAuth object from the authentication library and store inside the DB
+export const createUserProfileDocument = async (userAuth, additionalData) => {
+  //if userAuth object does not exist then exit from this function
+  //this is in the case of when user sign out and return null object
+  if (!userAuth) return;
+  //if it does exist, then query inside the firestore for the document to see if
+  //it already exist.
+  const userRef = firestore.doc(`users/${userAuth.uid}`);
+  //to determine whether or not there's any data in the current reference in firestore
+  // immutable copy of the data at a Database location.
+  const snapShot = await userRef.get();
+  if (!snapShot.exists) {
+    //create new data
+    const { displayName, email } = userAuth;
+    const createdAt = new Date();
+    //Create new user data
+    try {
+      await userRef.set({
+        displayName: displayName,
+        email: email,
+        createdAt: createdAt,
+        ...additionalData,
+      });
+    } catch (error) {
+      console.log("Error creating user", error.message);
+    }
+  }
+  return userRef;
+};
+
 //Initialize Firebase in your app
 firebase.initializeApp(config);
 

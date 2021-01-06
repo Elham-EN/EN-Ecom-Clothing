@@ -18,11 +18,11 @@ class SignIn extends React.Component {
     event.preventDefault();
     this.setState({ email: "", password: "" });
   };
+
   //name= email or password, value= input value
   handleChange = (event) => {
     const { value, name } = event.target;
     this.setState({ [name]: value }); //make it dynamic
-    console.log(name, ":", `'`, value, `'`);
   };
 
   render() {
@@ -55,7 +55,11 @@ class SignIn extends React.Component {
             {
               //when a prop is passed with no value, its default to true
             }
-            <CustomButton onClick={signInWithGoogle} isGoogleSignIn>
+            <CustomButton
+              type="button"
+              onClick={signInWithGoogle}
+              isGoogleSignIn
+            >
               Sign In With Google
             </CustomButton>
           </div>
