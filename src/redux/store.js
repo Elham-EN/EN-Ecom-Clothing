@@ -13,7 +13,9 @@ import rootReducer from "./root-reducer";
 //The middleware is that the store is expecting from redux is an array.
 const middleware = [logger];
 
-//This fucntion that get both root reducer and also return value of applyMiddleware
+//The Redux store brings together the state, actions, and reducers that make up your app.
+//Creates a Redux store that holds the complete state tree of your app. A reducing function
+//that returns the next state tree, given the current state tree and an action to handle.
 const store = createStore(rootReducer, applyMiddleware(...middleware));
 
 export default store;

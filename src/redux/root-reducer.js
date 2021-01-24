@@ -4,8 +4,10 @@
 
 import { combineReducers } from "redux";
 import userReducer from "./user/user.reducer";
+import cartReducer from "./cart/cart.reducer";
 
 //return all reducers into one big object & key represent the individual slices of state
 export default combineReducers({
   user: userReducer,
+  cart: cartReducer,
 });

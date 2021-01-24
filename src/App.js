@@ -1,24 +1,19 @@
 import React from "react";
-import { Route, Switch } from "react-router-dom";
+import { Route, Switch, Redirect } from "react-router-dom";
+import { connect } from "react-redux";
 import "./App.css";
 import HomePage from "./pages/homepage/homepage.component";
 import ShopPage from "./pages/shop/shop.component";
 import Header from "./components/header/header.component";
 import SignInAndSignUpPage from "./pages/sign-in-and-sign-up/sign-in-and-sign-up.component";
 import { auth, createUserProfileDocument } from "./firebase/firebase.utils";
+import { setCurrentUser } from "./redux/user/user.actions";
 
 class App extends React.Component {
-  constructor(props) {
-    super(props);
-
-    this.state = {
-      currentUser: null,
-    };
-  }
-
   unsubscribeFromAuth = null;
 
   componentDidMount() {
+    const { setCurrentUser } = this.props;
     //This triggered the observer when users were signed in & signed out
     //fetch that current user Auth object who sign in
     this.unsubscribeFromAuth = auth.onAuthStateChanged(async (userAuth) => {
@@ -30,20 +25,14 @@ class App extends React.Component {
         //Cloud Firestore sends your listener an initial snapshot of the data,
         //and then another snapshot each time the document changes.
         userRef.onSnapshot((snapshot) => {
-          this.setState({
-            currentUser: {
-              id: snapshot.id,
-              ...snapshot.data(),
-            },
+          setCurrentUser({
+            id: snapshot.id,
+            ...snapshot.data(),
           });
-          console.log(this.state);
-        });
-        //when user sign out and the userAuth object is null
-      } else {
-        this.setState({
-          currentUser: userAuth,
         });
       }
+      //when user sign out and the userAuth object is null
+      setCurrentUser(userAuth);
     });
   }
 
@@ -55,15 +44,45 @@ class App extends React.Component {
   render() {
     return (
       <div>
-        <Header currentUser={this.state.currentUser} />
+        <Header />
         <Switch>
           <Route exact path="/" component={HomePage} />
           <Route path="/shop" component={ShopPage} />
-          <Route path="/signin" component={SignInAndSignUpPage} />
+          <Route
+            exact
+            path="/signin"
+            render={() =>
+              //Check if user is sign in
+              this.props.currentUser ? (
+                <Redirect to="/" />
+              ) : (
+                <SignInAndSignUpPage />
+              )
+            }
+          />
         </Switch>
       </div>
     );
   }
 }
 
-export default App;
+//selecting the part of the data from the store that the connected component needs
+const mapStateToProps = ({ user }) => ({
+  currentUser: user.currentUser,
+});
+
+/**mapDispatchToProps is used for dispatching actions to the store. Which is a function that
+ * gets this dispatch property and will return an object whatever prop we want to pass in that
+ * dispatches the new action we pass.
+ *
+ * mapDispatchToProps() is a utility which will help your component to fire an action event
+ * (dispatching action which may cause change of application state)
+ */
+//
+const mapDispatchToProps = (dispatch) => ({
+  //gets the user object and then call dispatch - an action object to pass to every reducer
+  setCurrentUser: (user) => dispatch(setCurrentUser(user)),
+});
+
+//dispatching actions to the store.
+export default connect(mapStateToProps, mapDispatchToProps)(App);

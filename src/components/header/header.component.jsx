@@ -1,11 +1,16 @@
 import React from "react";
 import { Link } from "react-router-dom";
+//React Redux provides a connect function for you to connect your component to the store.
+import { connect } from "react-redux";
 import { auth } from "../../firebase/firebase.utils";
 // special syntax when importing SVG in React.
 //import { ReactComponent as Logo } from "../../assets/crown.svg";
 import "./header.styles.scss";
+import CartIcon from "../cart-icon/cart-icon.component";
+import CartDropdown from "../cart-dropdown/cart-dropdown.component";
 
-const Header = ({ currentUser }) => (
+//mapStateToProp props into the header component
+const Header = ({ currentUser, hidden }) => (
   <div className="header">
     <Link to="/">
       <h1 className="header-h1">famazone</h1>
@@ -31,8 +36,36 @@ const Header = ({ currentUser }) => (
           </Link>
         )
       }
+      <CartIcon />
     </div>
+    {
+      //if hidden is true, then render noting, if false then render the dropdown component
+      hidden ? null : <CartDropdown />
+    }
   </div>
 );
 
-export default Header;
+/**
+ *This mapStateToProps and this connect we will use anywhere we need properties from
+  our reducer. https://react-redux.js.org/using-react-redux/connect-mapstate
+  Each field in the object will become a prop for your actual component
+ */
+
+/*Fucntion that allow us to access the state. With the state being our root reducer. 
+  First arg is entire Redux store state. mapStateToProps function should return a plain 
+  object that contains the data the component needs:
+  Using Advance destructure*/
+const mapStateToProp = ({ user: { currentUser }, cart: { hidden } }) => {
+  return {
+    //Get current user value from user reduce through root reducer
+    //currentUser: state.user.currentUser,
+    currentUser,
+    hidden,
+  };
+};
+
+//React Redux provides a connect function for you to connect your component to the store.
+//Now the header component to receive the current user value from the reducer
+//mapStateToProps is used for selecting the part of the data from the store that the
+//connected component needs. This is also called Higher Order Component
+export default connect(mapStateToProp)(Header);

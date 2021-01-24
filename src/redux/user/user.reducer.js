@@ -1,3 +1,4 @@
+import { UserActionTypes } from "./user.types";
 /**
  * A reducer is just a function that gets two propertied.
  * State -- parameter
@@ -29,7 +30,7 @@ const userReducer = (state = INITIAL_STATE, action) => {
   // Check to see if the reducer cares about this action
   switch (action.type) {
     // If so, make a copy of `state`
-    case "SET_CURRENT_USER":
+    case UserActionTypes.SET_CURRENT_USER:
       return {
         //Return new object that represent the new state user reducer transform into
         ...state,
