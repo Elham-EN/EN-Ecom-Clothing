@@ -2,6 +2,7 @@ import React from "react";
 import { connect } from "react-redux";
 import CustomButton from "../custom-button/custom-button.component";
 import CartItem from "../cart-item/cart-item.component";
+import { selectCartItems } from "../../redux/cart/cart.selectors";
 import "./cart-dropdown.styles.scss";
 
 //Destructure the Props
@@ -18,8 +19,8 @@ const CartDropdown = ({ cartItems }) => (
 );
 
 //Need access to those cart items from redux store & destructure state & return
-const mapStateToProps = ({ cart: { cartItems } }) => ({
-  cartItems,
+const mapStateToProps = (state) => ({
+  cartItems: selectCartItems(state),
 });
 
 //Acess Redux Store that this component needs
