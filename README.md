@@ -16,6 +16,8 @@
       * The app has a large-sized codebase and redux was needed.  
       
       
+      
+      
       How to be a pro react developer ? 
 
         1. Decide on Components 
