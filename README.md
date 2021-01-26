@@ -1,3 +1,43 @@
+# Key features of this E-commerce application :
+
+  * Used Firebase to build full stack application, authentication, user accounts
+  
+  * Use Redux with flux design pattern to manage "global" state that is needed across many 
+    part of my application and redux store serves as centralized store for whole application. 
+    
+    Why I used Redux ?
+    
+      * My application had large amounts of state that are needed in many place in the app.
+      
+      * The app state is updated frequently over time
+      
+      * The logic to update the state may gets more complex and props drill was a bad practice 
+      
+      * The app has a large-sized codebase and redux was needed.  
+      
+      
+      How to be a pro react developer ? 
+
+        1. Decide on Components 
+          a. What is a components ?
+          
+          b. How much do we want to break down a component ?
+          
+          c. How do we build these reusable components ?
+
+        2. Decide the state and where it lives 
+          a. State can live in different location in our virtual DOM
+          
+          b. Placing state in the appropriate components
+	
+        3.  What changes when state changes 
+          a. What changes should we make when state changes Based on what this JS object called state is changed.
+          
+          b. We have to decide what to render, what part of the virtual DOM changes and deciding on this is also 
+             important because it has a huge effects on performance. 
+
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
