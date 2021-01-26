@@ -15,7 +15,8 @@
       
       * The app has a large-sized codebase and redux was needed.  
       
-      
+      ![349-3494406_ninja-head-filled-icon-ninja-head-cartoon-clipart](https://user-images.githubusercontent.com/49786176/105799071-c446f200-5fe7-11eb-8d3e-2b82371a0c38.png)
+
       
       
       How to be a pro react developer ? 
