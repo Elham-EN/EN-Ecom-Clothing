@@ -1,5 +1,5 @@
 import CartActionTypes from "./cart.types";
-import { addItemToCart } from "./cart.utils";
+import { addItemToCart, removeItemFromCart } from "./cart.utils";
 
 /**Hidden value is true because we want to hide the dropdow when the app initialize */
 const INITIAL_STATE = {
@@ -24,6 +24,21 @@ const cartReducer = (state = INITIAL_STATE, action) => {
          * First spreding in the existing items that is already on the state and add any
          * additonal value at the end*/
         cartItems: addItemToCart(state.cartItems, action.payload),
+      };
+
+    case CartActionTypes.REMOVE_ITEM:
+      return {
+        ...state,
+        cartItems: removeItemFromCart(state.cartItems, action.payload),
+      };
+
+    case CartActionTypes.CLEAR_ITEM_FROM_CART:
+      return {
+        ...state, //return new state
+        cartItems: state.cartItems.filter(
+          //Remove from the existing cart array
+          (cartItem) => cartItem.id !== action.payload.id
+        ),
       };
 
     default:

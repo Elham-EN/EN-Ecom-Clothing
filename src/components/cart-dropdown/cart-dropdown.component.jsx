@@ -34,6 +34,7 @@ const CartDropdown = ({ cartItems, history, dispatch }) => (
 //history.push() it redirects and adds the page to the browser history.
 
 //Need access to those cart items from redux store & destructure state & return
+//mapStateToProps, as it’s only responsible for retrieving data from the store.
 const mapStateToProps = (state) => ({
   cartItems: selectCartItems(state),
 });

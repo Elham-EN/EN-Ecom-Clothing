@@ -39,10 +39,12 @@ const CheckoutPage = ({ cartItems, total }) => (
 );
 
 /**To cut down on boilerplate. createStructuredSelector() is most helpful
- * to use in components that are pulling in a number of selectors. */
+ * to use in components that are pulling in a number of selectors.
+ * mapStateToProps, as it’s only responsible for retrieving data from the store. */
 const mapStateToProps = createStructuredSelector({
   cartItems: selectCartItems,
   total: selectCartTotal,
 });
 
+//a higher-order component is a function that takes (wraps) a component and returns a new component.
 export default connect(mapStateToProps)(CheckoutPage);
