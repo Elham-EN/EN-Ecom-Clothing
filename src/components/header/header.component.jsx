@@ -2,6 +2,9 @@ import React from "react";
 import { Link } from "react-router-dom";
 //React Redux provides a connect function for you to connect your component to the store.
 import { connect } from "react-redux";
+import { createStructuredSelector } from "reselect";
+import { selectCartHidden } from "../../redux/cart/cart.selectors";
+import { selectCurrentUser } from "../../redux/user/user.selectors";
 import { auth } from "../../firebase/firebase.utils";
 // special syntax when importing SVG in React.
 //import { ReactComponent as Logo } from "../../assets/crown.svg";
@@ -54,15 +57,15 @@ const Header = ({ currentUser, hidden }) => (
 /*Fucntion that allow us to access the state. With the state being our root reducer. 
   First arg is entire Redux store state. mapStateToProps function should return a plain 
   object that contains the data the component needs:
-  Using Advance destructure*/
-const mapStateToProp = ({ user: { currentUser }, cart: { hidden } }) => {
-  return {
+  Using Advance destructure - { user: { currentUser }, cart: { hidden } }*/
+const mapStateToProp = (state) =>
+  /**Takes an object whose properties are input-selectors*/
+  createStructuredSelector({
     //Get current user value from user reduce through root reducer
     //currentUser: state.user.currentUser,
-    currentUser,
-    hidden,
-  };
-};
+    currentUser: selectCurrentUser,
+    hidden: selectCartHidden,
+  });
 
 //React Redux provides a connect function for you to connect your component to the store.
 //Now the header component to receive the current user value from the reducer
