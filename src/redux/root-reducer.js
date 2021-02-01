@@ -7,6 +7,7 @@ import { persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import userReducer from "./user/user.reducer";
 import cartReducer from "./cart/cart.reducer";
+import directoryReducer from "./directory/directory.reducer";
 
 //Persist the data
 const persistConfig = {
@@ -19,6 +20,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   user: userReducer, //is handled by firebase authentication
   cart: cartReducer,
+  directory: directoryReducer,
 });
 
 export default persistReducer(persistConfig, rootReducer);
