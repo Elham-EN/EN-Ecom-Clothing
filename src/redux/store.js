@@ -7,6 +7,7 @@
 
 import { createStore, applyMiddleware } from "redux";
 import { logger } from "redux-logger";
+import { persistStore } from "redux-persist";
 import rootReducer from "./root-reducer";
 
 //SET UP THE MIDDLEWARE
@@ -18,4 +19,6 @@ const middleware = [logger];
 //that returns the next state tree, given the current state tree and an action to handle.
 const store = createStore(rootReducer, applyMiddleware(...middleware));
 
-export default store;
+const persistor = persistStore(store);
+
+export { store, persistor };

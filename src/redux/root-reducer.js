@@ -3,11 +3,22 @@
  * our other states. All the reducers will go here to the root reducer.*/
 
 import { combineReducers } from "redux";
+import { persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 import userReducer from "./user/user.reducer";
 import cartReducer from "./cart/cart.reducer";
 
+//Persist the data
+const persistConfig = {
+  key: "root", //at what point inside the reducer object want to start storing everyting
+  storage,
+  whitelist: ["cart"], //is an array containing the string of any reducer that want to store
+};
+
 //return all reducers into one big object & key represent the individual slices of state
-export default combineReducers({
-  user: userReducer,
+const rootReducer = combineReducers({
+  user: userReducer, //is handled by firebase authentication
   cart: cartReducer,
 });
+
+export default persistReducer(persistConfig, rootReducer);
