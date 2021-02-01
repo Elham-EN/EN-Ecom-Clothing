@@ -8,8 +8,6 @@ const INITIAL_STATE = {
 };
 //Everytime a Reducer update, it return a new object and mapStateToProps is called
 const cartReducer = (state = INITIAL_STATE, action) => {
-  console.log("state: ", state);
-  console.log("action: ", action);
   switch (action.type) {
     case CartActionTypes.TOGGLE_CART_HIDDEN:
       return {
