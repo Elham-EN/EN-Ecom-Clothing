@@ -5,10 +5,15 @@ import CollectionItem from "../../components/collection-item/collection-item.com
 import "./collection.styles.scss";
 
 const CollectionPage = (props) => {
-  console.log(props.collection);
+  //console.log(props.collection);
   return (
     <div className="collection-page">
-      <h2>Collection PAGE</h2>
+      <h2 className="title">{props.collection.title}</h2>
+      <div className="items">
+        {props.collection.items.map((item) => (
+          <CollectionItem key={item.id} item={item} />
+        ))}
+      </div>
     </div>
   );
 };
