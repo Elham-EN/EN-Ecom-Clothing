@@ -14,8 +14,18 @@ export const selectCollections = createSelector(
   [selectShop],
   (shop) => shop.collections
 );
+
+//Now collections is an object and need to convert it into array
+export const selectCollectionsForPreview = createSelector(
+  [selectCollections],
+  //This return all the values of object as an array & map return the items of that key
+  (collections) => Object.keys(collections).map((key) => collections[key])
+);
+
 /**Data normalization is that you store lists of elements as objects instead of arrays
  * More on Data Normalization https://brainsandbeards.com/blog/advanced-redux-patterns-normalisation
+ * Generally it is faster to use object key value pairs when you have large amounts of data.
+ * For small datasets, arrays can be faster.
  */
 export const selectCollection = (collectionUrlParam) => {
   return createSelector(

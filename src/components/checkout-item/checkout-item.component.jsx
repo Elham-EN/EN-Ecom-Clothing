@@ -6,6 +6,7 @@ import {
   removeItem,
 } from "../../redux/cart/cart.actions";
 import "./checkout-item.styles.scss";
+import StripeCheckoutButton from "../../components/stripe-button/stripe-button.component";
 
 //Access props from checkout page
 const CheckoutItem = (props) => (
