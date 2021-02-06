@@ -1,5 +1,4 @@
 import React from "react";
-import { Link } from "react-router-dom";
 //React Redux provides a connect function for you to connect your component to the store.
 import { connect } from "react-redux";
 import { createStructuredSelector } from "reselect";
@@ -8,44 +7,49 @@ import { selectCurrentUser } from "../../redux/user/user.selectors";
 import { auth } from "../../firebase/firebase.utils";
 // special syntax when importing SVG in React.
 //import { ReactComponent as Logo } from "../../assets/crown.svg";
-import "./header.styles.scss";
 import CartIcon from "../cart-icon/cart-icon.component";
 import CartDropdown from "../cart-dropdown/cart-dropdown.component";
+import {
+  HeaderContainer,
+  LogoContainer,
+  LogoHeader,
+  OptionsContainer,
+  OptionLink,
+} from "./header.styles";
 
 //mapStateToProp props into the header component
 const Header = ({ currentUser, hidden }) => (
-  <div className="header">
-    <Link to="/">
-      <h1 className="header-h1">famazone</h1>
-    </Link>
-    <div className="options">
-      <Link className="option" to="/shop">
+  <HeaderContainer>
+    <LogoContainer to="/">
+      <LogoHeader>famazone</LogoHeader>
+    </LogoContainer>
+    <OptionsContainer>
+      <OptionLink to="/shop">
         <p>SHOP</p>
-      </Link>
-      <Link className="option" to="/shop">
+      </OptionLink>
+      <OptionLink to="/shop">
         <p>Contact</p>
-      </Link>
-
+      </OptionLink>
       {
         //if current user is an object, it will evaluate to true then it
         //will render a div. If it is false such as null, then rehder the link
         currentUser ? (
-          <div className="option" onClick={() => auth.signOut()}>
+          <OptionLink as="div" onClick={() => auth.signOut()}>
             <p>SIGN OUT</p>
-          </div>
+          </OptionLink>
         ) : (
-          <Link className="option" to="/signin">
+          <OptionLink to="/signin">
             <p>Sign In</p>
-          </Link>
+          </OptionLink>
         )
       }
       <CartIcon />
-    </div>
+    </OptionsContainer>
     {
       //if hidden is true, then render noting, if false then render the dropdown component
       hidden ? null : <CartDropdown />
     }
-  </div>
+  </HeaderContainer>
 );
 
 /**
